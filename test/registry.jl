@@ -320,4 +320,25 @@ end
     end
 end
 
+@testset "registries" begin
+    temp_pkg_dir(;) do depot
+        Pkg.Registry.DEFAULT_REGISTRIES[1].path = nothing
+        withenv("JULIA_PKG_UNPACK_REGISTRY" => nothing) do
+            # This should not uncompress the registry
+            Registry.add(RegistrySpec(uuid = UUID("23338594-aafe-5451-b93e-139f81909106")))
+            isfile(joinpath(DEPOT_PATH[1], "registries", "General", "General.tar.gz"))
+            Pkg.add("Example")
+            
+            # Write some bad git-tree-sha1 here so that Pkg.update will have to update the registry
+            write(joinpath(DEPOT_PATH[1], "registries", "General", ".registry_info.toml"),
+                """
+                git-tree-sha1 = "179182faa6a80b3cf24445e6f55c954938d57941"
+                uuid = "23338594-aafe-5451-b93e-139f81909106"
+                filename = "General.tar.gz"
+                """)
+            Pkg.update()
+        end
+    end
+end
+
 end # module
