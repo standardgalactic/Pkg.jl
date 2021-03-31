@@ -1,7 +1,7 @@
 Pkg v1.7 Release Notes
 ======================
 
-- Regisries downloaded from the Pkg Server (not git) are no longer uncompressed into files but instead read directly from the compressed tarball into memory. This improves performance on
+- Registries downloaded from the Pkg Server (not git) are no longer uncompressed into files but instead read directly from the compressed tarball into memory. This improves performance on
   filesystems which do not handle a large number of files well. To turn this feature off, set the environment variable `JULIA_PKG_UNPACK_REGISTRY=true`.
 - It is now possible to use an external `git` executable instead of the default libgit2 library for 
   the downloads that happen via the Git protocol by setting the environment variable `JULIA_PKG_USE_CLI_GIT=true`.
