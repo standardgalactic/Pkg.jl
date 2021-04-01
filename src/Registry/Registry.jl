@@ -170,8 +170,6 @@ function download_registries(io::IO, regs::Vector{RegistrySpec}, depot::String=d
             Pkg.Types.pkgerror("ambiguous registry specification; both url and path is set.")
         end
         url, registry_urls = pkg_server_registry_url(reg.uuid, registry_urls)
-        @show url
-        @show registry_read_from_tarball()
         if url !== nothing && registry_read_from_tarball()
             tmp = tempname()
             try
