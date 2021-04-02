@@ -189,6 +189,9 @@ end
 
 
 function uncompress_registry(tar_gz::AbstractString)
+    if !isfile(tar_gz)
+        error("$(repr(tar_gz)): No such file")
+    end
     data = Dict{String, String}()
     buf = Vector{UInt8}(undef, Tar.DEFAULT_BUFFER_SIZE)
     io = IOBuffer()
